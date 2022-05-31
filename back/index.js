@@ -14,3 +14,5 @@ for (var i = 0; i < titlearray.length; i++) {
 </article>
 </a>` + fetch ; }
 // End of Dynamic Cards Display
+
+// Research URLSearchParam
