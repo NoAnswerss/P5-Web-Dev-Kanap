@@ -1,8 +1,8 @@
 
 // Display Dynamic Cards
-var titlearray =["kanap","kanap","kanap","kanap","kanap","kanap","kanap"];
+var titlearray =["Beestay","Future lime","Powder","Charcoal diamonds","Carbone","El fuego","Candy dream"];
 var descriptionarray =["kanap","kanap","kanap","kanap","kanap","kanap","kanap"];
-var imageArray = ["kanap01","kanap02","kanap03","kanap04","kanap05","kanap06","kanap07","kanap08"]
+var imageArray = ["kanap02","kanap03","kanap04","kanap05","kanap06","kanap07","kanap08"]
 var dynamic = document.querySelector('.items');  
 for (var i = 0; i < titlearray.length; i++) {
   var fetch = document.querySelector('.items').innerHTML;  
