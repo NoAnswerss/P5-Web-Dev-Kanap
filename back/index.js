@@ -14,5 +14,11 @@ for (var i = 0; i < titlearray.length; i++) {
 </article>
 </a>` + fetch ; }
 // End of Dynamic Cards Display
-
+// So you should put all your fetch calls together for easier access.
 // Research URLSearchParam
+
+const request = new XMLHttpRequest();
+
+
+request.open('GET','');
+request.send
