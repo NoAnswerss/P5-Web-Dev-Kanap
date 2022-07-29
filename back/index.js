@@ -36,19 +36,18 @@ for (var i = 0; i < titlearray.length; i++) {
     }).then(data => {
       console.log(data); // check later
       const html = data.map(sofa => {
-
-        return `<h2>Name: ${sofa.name}</h2>
+        return `
           <a>
           <article>
-          <img src="/back/images/kanap01.jpeg" alt="Blue Sofa">
-          <h3 class="productName"></h3>
-          <p class="productDescription"></p>
+          <img src="${sofa.imageUrl}" alt=${sofa.altTxt}>
+          <h3 class="productName">${sofa.name}</h3>
+          <p class="productDescription">${sofa.description}</p>
           </article>
           </a>
         `; 
       }).join("");
       console.log(html);
-      document.querySelector('.items').insertAdjacentHTML("beforebegin", html)
+      document.querySelector('.items').insertAdjacentHTML("afterbegin", html) // Used after begin and got right result
     }).catch(error => {
       console.log(error);
     });
