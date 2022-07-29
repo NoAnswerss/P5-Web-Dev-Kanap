@@ -37,7 +37,7 @@ for (var i = 0; i < titlearray.length; i++) {
       console.log(data); // check later
       const html = data.map(sofa => {
         return `
-          <a>
+          <a href="./product.html?${sofa._id}">
           <article>
           <img src="${sofa.imageUrl}" alt=${sofa.altTxt}>
           <h3 class="productName">${sofa.name}</h3>
