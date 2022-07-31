@@ -26,6 +26,10 @@ for (var i = 0; i < titlearray.length; i++) {
   .then(response => response.text())
   .then(console.log)
   console.log(url); */
+
+
+  // Requesting data from the API
+  
   function fetchData() {
     fetch('http://localhost:3000/api/products')
     .then(response => {
@@ -34,7 +38,7 @@ for (var i = 0; i < titlearray.length; i++) {
       }
       return response.json();
     }).then(data => {
-      console.log(data); // check later
+      console.log(data); 
       const html = data.map(sofa => {
         return `
           <a href="./product.html?${sofa._id}">
