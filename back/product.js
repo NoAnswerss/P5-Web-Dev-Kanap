@@ -15,7 +15,6 @@ function fetchData() {
         }
         return response.json();
     }).then(data => { 
-      console.log(data)
         document.getElementById('title').innerText = data.name
         document.getElementById('price').innerText = data.price
         document.getElementById('description').innerText = data.description 
@@ -34,8 +33,14 @@ function fetchData() {
 
 fetchData();
 
+// Cart array 
+
+let cart = [];
+
+
 // Add to Cart
 
 function addToCart(id) {
-  console.log(id);
-}
+ const item = products.find((product) => product.id === id)
+ console.log(item);
+} // 
