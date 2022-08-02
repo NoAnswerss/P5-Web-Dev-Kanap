@@ -1,4 +1,3 @@
-
 // get the id from uRL 
 let searchparams =  new URLSearchParams(window.location.search) 
 let id = searchparams.get('id') 
@@ -33,14 +32,25 @@ function fetchData() {
 
 fetchData();
 
-// Cart array 
-
-let cart = [];
 
 
-// Add to Cart
+// Local storage can only read arrays
 
-function addToCart(id) {
- const item = products.find((product) => product.id === id)
- console.log(item);
-} // 
+
+
+
+/* Cheat Sheet
+
+// DOM ELEMENT REFERENCES
+const firstNameInput = document.getElementById('first-name');
+const lastNameInput = document.getElementById('last-name');
+const submitButton = document.getElementById('submit-button');
+const sidebar = document.getElementById('sidebar');
+const commentForm = document.getElementById('comment-form'); Gets access to the form (From HTML)
+
+submitButton.addEventListener('click', ($event) => {
+  $event.preventDefault()   STOPS PAGE REFRESHING 
+  sidebar.textContent = 'Hi there, ' + firstNameInput.value + ' ' +     lastNameInput.value;
+  commentForm.reset()       RESETS FORM AFTER SUBMIT
+});
+}); */
