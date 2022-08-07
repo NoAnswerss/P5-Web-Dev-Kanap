@@ -32,38 +32,67 @@ function fetchData() {
 }
 
 fetchData();
-// Geting HTML Access
-const submitButton = document.getElementById('btn');
+
+// Create add to cart function
+
+// Getting HTML Access
+
+const btn = document.getElementById('btn');
 const title = document.getElementById('title');
 const quantity = document.getElementById('quantity');
-const color = document.getElementById('colors')
+const color = document.getElementById('colors');
+const price = document.getElementById('price');
+const description = document.getElementById('description');
 
-// Add Click event 
+// Add click event 
 
-submitButton.addEventListener('click', ($event) => {
-  $event.preventDefault(); // Stops default behaviour
-  const cart = [];
-  // Create new object 
-  const myObj = {
+btn.addEventListener('click', ($event) => {
+  $event.preventDefault(); // Prevents default behaviour
+  let cart = [];
+   // Create object to be added to cart
+   let myObj = {
     title: title.textContent,
     quantity: quantity.value,
-    color: color.value
+    color: color.value,
+    price: price.textContent,
+    description: description.textContent,
+    id: id
   };
-  cart.push(myObj);
-  localStorage.setItem('session', JSON.stringify(cart))
-  submitFormData(myObj); // Calling the async function 
-  console.log(localStorage)
+  // Adding cart to local storage 
+  if( localStorage.getItem('sofa') != null){
+    // Takes cart back to sto
+    cart = JSON.parse( localStorage.getItem('sofa') )
+    cart.push(myObj)
+    localStorage.setItem('sofa',JSON.stringify(cart)) 
+  // Stringify transforms JS Object into JSON string
+  }else{
+   cart.push(myObj);
+   localStorage.setItem('sofa', JSON.stringify(cart));
+   console.log(localStorage);
+  
+   // Informs how many items have been added to cart
+   alert (quantity.value + ' Products' + ' added to cart');
+  }
 });
 
 
-// Creating Async Function
+/* JS OBJECT 
 
-async function submitFormData(post) {
-  try {
-    const requestPromise = makeRequest(myObj);
-    const response = await requestPromise;
-    quantity.textContent = response.quantity;
-  } catch (errorResponse) {
-    quantity.textContent = errorResponse.error;
-  }
-};
+{
+  name: 'Jeje',
+  age: 58,
+  occupation: lotteryWinner
+} 
+
+
+function ---> JSON.stringify() ----> JSON.parse() reverse effect
+
+JSON String 
+
+"{
+  name: 'Jeje',
+  age: 58,
+  occupation: lotteryWinner
+} " 
+
+*/
