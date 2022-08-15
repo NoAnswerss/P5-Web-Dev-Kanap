@@ -1,98 +1,101 @@
-// get the id from uRL 
-let searchparams =  new URLSearchParams(window.location.search) 
-let id = searchparams.get('id') 
-let api = 'http://localhost:3000/api/products/'
-console.log('id',id)
+// Getting query string
+const search = window.location.search;
 
-function fetchData() {
-  
-  // Inserting a single product and its details into the product page
-  
-  fetch('http://localhost:3000/api/products/' + id) 
-  .then(response => {
-    if (!response.ok) {
-      throw Error('Error')
+// Creating searchparams to work on query string
+const searchParams = new URLSearchParams(search);
+
+// Using get() method we get the id assigned to the product
+
+let productId = searchParams.get('id');
+
+// Get product info from its id and display it
+// 'async' before a function makes the function return a promise, always
+async function getProduct(id) {
+
+    try {
+        let product = await loadAPI(`${urlAPI}${id}`);
+        showProductDetails(product);
+
+    } catch (err) {
+        alert("Problem with the API");
+        console.log(err);
     }
-    return response.json();
-  }).then(data => { 
-    document.getElementById('title').innerText = data.name
-    document.getElementById('price').innerText = data.price
-    document.getElementById('description').innerText = data.description 
-    document.getElementById('sofa_image').src = data.imageUrl // Images need src instead of innerText or innerHTML
-    // Created map to display array of colors 
-    let colors = document.getElementById('colors')
-    data.colors.map(color=>{
-      colors.insertAdjacentHTML('beforeend', `<option value=${color}>${color}</option>`) 
-    })
-    // document.getElementById('title').innerText = data.name
-    // document.getElementById('title').innerText = data.name
-  }).catch(error => {
-    console.log(error);
-  });
+
 }
 
-fetchData();
+// Displaying the products in the DOM
 
-// Create add to cart function
+const showProductDetails = product => {
+    const image = document.createElement('img');
+    image.setAttribute('src', product.imageUrl);
+    image.setAttribute('alt', product.altTxt);
+    document.querySelector('.item__img').appendChild(image);
 
-// Getting HTML Access
+    document.getElementById('title').innerText = product.name;
+    document.getElementById('price').innerText = product.price;
+    document.getElementById('description').innerText = product.description;
 
-const btn = document.getElementById('btn');
-const title = document.getElementById('title');
-const quantity = document.getElementById('quantity');
-const color = document.getElementById('colors');
-const price = document.getElementById('price');
-const description = document.getElementById('description');
+    const colors = document.getElementById('colors');
+    product.colors.forEach(color => {
+        const option = document.createElement('option');
+        option.setAttribute('value', color);
+        option.innerText = color;
+        colors.appendChild(option);
+    });
 
-// Add click event 
+};
 
-btn.addEventListener('click', ($event) => {
-  $event.preventDefault(); // Prevents default behaviour
-  let cart = [];
-   // Create object to be added to cart
-   let myObj = {
-    title: title.textContent,
-    quantity: quantity.value,
-    color: color.value,
-    price: price.textContent,
-    description: description.textContent,
-    id: id
-  };
-  // Adding cart to local storage 
-  if( localStorage.getItem('sofa') != null){
-    // Takes cart back to sto
-    cart = JSON.parse( localStorage.getItem('sofa') )
-    cart.push(myObj)
-    localStorage.setItem('sofa',JSON.stringify(cart)) 
-  // Stringify transforms JS Object into JSON string
-  }else{
-   cart.push(myObj);
-   localStorage.setItem('sofa', JSON.stringify(cart));
-   console.log(localStorage);
-  
-   // Informs how many items have been added to cart
-   alert (quantity.value + ' Products' + ' added to cart');
-  }
+getProduct(productId);
+
+// Creating the click event listener on cart button
+
+document.getElementById('btn').addEventListener('click', () => {
+    // Passing what information to display 
+    const productToAdd = {
+        id: productId,
+        color: document.getElementById('colors').value,
+        quantity: parseInt(document.getElementById('quantity').value)
+    }
+    // validating product quantity and color
+    if (isQuantityValid(productToAdd.quantity) && isColorValid(productToAdd.color)) {
+        addItemToCart(productToAdd);
+        alert(JSON.stringify(productToAdd.quantity) + " Sofa(s) added to basket");
+    } else {
+        if(!isQuantityValid(productToAdd.quantity)) {
+            alert("Enter a number between 1 and 100"); // Displays error if number is not between 1 and 100
+        }
+        if(!isColorValid(productToAdd.color)) { 
+            alert('Select a color'); // Displays error if color not selected.
+        }
+    }
 });
 
+// Adding the product to the cart
 
-/* JS OBJECT 
+const addItemToCart = productToAdd => {
+    
+    let listOfProducts = getProductsFromLocalStorage();
+    updateCart(listOfProducts, productToAdd);
+}
 
-{
-  name: 'Jeje',
-  age: 58,
-  occupation: lotteryWinner
-} 
+// Updates the cart product list with the added product
 
+const updateCart = (listOfProducts, productToAdd) => {
+    
+    // Check cart for duplicate (id, color)
 
-function ---> JSON.stringify() ----> JSON.parse() reverse effect
+    const index = listOfProducts.findIndex(product => productToAdd.id === product.id && productToAdd.color === product.color);
+    
+    if(index < 0) {
+        // If no duplicate found then push item to cart
+        listOfProducts.push(productToAdd);
+    } else {
+        // If duplicate found, increase the number of products. 
+        listOfProducts[index].quantity += productToAdd.quantity;
+    }
 
-JSON String 
+    // Updating the list of products in the localStorage
+    setProductsInLocalStorage(listOfProducts);
+    
+}
 
-"{
-  name: 'Jeje',
-  age: 58,
-  occupation: lotteryWinner
-} " 
-
-*/

@@ -46,14 +46,14 @@
       <div class="limitedWidthBlock">
         <section class="item">
          <article>
-            <div class="item__img">
-              <img id="sofa_image" src="../images/logo.png" alt="Photographie d'un canapé"> 
+          <div class="item__img">
+             <!-- <img id="sofa_image" src="../images/logo.png" alt="Photographie d'un canapé">  -->
             </div>
             <div class="item__content">
 
               <div class="item__content__titlePrice">
-                <h1 id="title">Nom du produit </h1>
-                <p>Prix : <span id="price"> 42 </span>€</p>
+                <h1 id="title"><!-- Product name --> </h1>
+                <p>Price : <span id="price"><!-- 42 --></span>€</p>
               </div>
 
               <div class="item__content__description">
@@ -63,11 +63,11 @@
 
               <div class="item__content__settings">
                 <div class="item__content__settings__color">
-                  <label for="color-select">Chose your color:</label>
+                  <label for="color-select">Choose your color:</label>
                   <select name="color-select" id="colors">
-                      <option value="">--Please, select a color --</option>
-                      <!-- <option value="vert">vert</option>
-                      <option value="blanc">blanc</option>  -->
+                      <option value="">**Please, select a color**</option>
+                      <option value="vert">vert</option>
+                      <option value="blanc">blanc</option>
                   </select>
                 </div>
 
@@ -110,6 +110,9 @@
         </div>
       </div>
     </footer>
+  <script src="../js/api.js"></script>
+  <script src="../js/manageLocalStorage.js"></script>
+  <script src="../js/control.js"></script>
   <script src="../js/product.js"></script>
   </body>
 </html>
