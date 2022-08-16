@@ -3,25 +3,25 @@
 // Check if quantity is has valid entry
 
 const isQuantityValid = quantity => {
-
-     // Boolean that checks if state is true or false
-
+    
+    // Boolean that checks if state is true or false
+    
     console.log(quantity);
     
     // NaN = not a number 
-
+    
     if(isNaN(quantity)) return false;
-
+    
     // || Won't allow to choose number over 100 && will let choose number over 100
-
+    
     return quantity < 1 || quantity > 100 ? false : true;
-
+    
 }
 
 // Check if color has been selected
 
 const isColorValid = color => {
-
+    
     return color === "" ? false : true;
     
 }
@@ -29,20 +29,20 @@ const isColorValid = color => {
 // Check if cart is empty
 
 const cartState = () => {
-
+    
     let result = true;
     
     const totalQuantity = parseInt(document.getElementById('totalQuantity').textContent);
-
+    
     // If basket is empty 
     if(totalQuantity === 0) {
         // Return alert 
         alert('Your basket is empty !');
         result = false;
     }
-
+    
     return result;
-
+    
 }
 
 const isNameValid = inputName => {
@@ -51,7 +51,7 @@ const isNameValid = inputName => {
         inputName.nextElementSibling.innerText = "";
         return true;
     } else {
-
+        
         if (inputName.name === "firstName") {
             inputName.nextElementSibling.innerText = "please enter a first name in the correct format";
         } else if (inputName.name === "lastName") {
@@ -66,7 +66,7 @@ const isNameValid = inputName => {
 // Check address for special characters 
 
 const isAddressValid = inputAddress => {
-
+    
     if (/^[a-z\éèàêâîiïù\d\-' ]{5,50}$/i.test(inputAddress.value)) {
         inputAddress.nextElementSibling.innerText = "";
         return true;
@@ -80,7 +80,7 @@ const isAddressValid = inputAddress => {
 const isEmailValid = inputEmail => {
     
     // Checking email address formatting
-
+    
     if (/^([a-z\d\._-]+)@([a-z\d_-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/i.test(inputEmail.value)) {
         inputEmail.nextElementSibling.innerText = "";
         return true;
@@ -88,4 +88,21 @@ const isEmailValid = inputEmail => {
         inputEmail.nextElementSibling.innerText = "add email address in correct format";
         return false;
     }
+}
+
+// Created cart checking 
+
+const isCartValid = () => {
+
+    let result = true;
+    
+    const totalQuantity = parseInt(document.getElementById('totalQuantity').textContent);
+
+    if(totalQuantity === 0) {
+        alert('Cart is empty !');
+        result = false;
+    }
+
+    return result;
+
 }

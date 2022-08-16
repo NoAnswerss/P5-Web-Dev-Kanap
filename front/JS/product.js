@@ -11,16 +11,16 @@ let productId = searchParams.get('id');
 // Get product info from its id and display it
 // 'async' before a function makes the function return a promise, always
 async function getProduct(id) {
-
+    
     try {
         let product = await loadAPI(`${urlAPI}${id}`);
         showProductDetails(product);
-
+        
     } catch (err) {
         alert("Problem with the API");
         console.log(err);
     }
-
+    
 }
 
 // Displaying the products in the DOM
@@ -30,11 +30,11 @@ const showProductDetails = product => {
     image.setAttribute('src', product.imageUrl);
     image.setAttribute('alt', product.altTxt);
     document.querySelector('.item__img').appendChild(image);
-
+    
     document.getElementById('title').innerText = product.name;
     document.getElementById('price').innerText = product.price;
     document.getElementById('description').innerText = product.description;
-
+    
     const colors = document.getElementById('colors');
     product.colors.forEach(color => {
         const option = document.createElement('option');
@@ -42,7 +42,7 @@ const showProductDetails = product => {
         option.innerText = color;
         colors.appendChild(option);
     });
-
+    
 };
 
 getProduct(productId);
@@ -83,7 +83,7 @@ const addItemToCart = productToAdd => {
 const updateCart = (listOfProducts, productToAdd) => {
     
     // Check cart for duplicate (id, color)
-
+    
     const index = listOfProducts.findIndex(product => productToAdd.id === product.id && productToAdd.color === product.color);
     
     if(index < 0) {
@@ -93,7 +93,7 @@ const updateCart = (listOfProducts, productToAdd) => {
         // If duplicate found, increase the number of products. 
         listOfProducts[index].quantity += productToAdd.quantity;
     }
-
+    
     // Updating the list of products in the localStorage
     setProductsInLocalStorage(listOfProducts);
     
