@@ -47,11 +47,11 @@ const displayCart = savedProducts => {
         document.querySelectorAll('.itemQuantity').forEach(input => {
             
             let oldValue = parseInt(input.value);
-            // Adding change event listener for <input> 
+            // Adding change event listener for <input> as per documentation Recommendation
             input.addEventListener('change', e => {
                 //  This method starts at the element itself, then the anchestors (parent, grandparent, ...) until a match is found
                 let article = e.target.closest('article');
-                // retrieve the input field value
+                // retrieve elements field value
                 let quantity = parseInt(e.target.value);
                 
                 if (isQuantityValid(quantity)) {
@@ -196,46 +196,46 @@ form.firstName.addEventListener('change', () => {
 // Submiting form
 
 form.addEventListener('submit', e => {
-
+    
     e.preventDefault();
-
+    
     // Check if cart is valid
     
     if(isCartValid()) {
         
         // If the card is validated, we create a contact object from the data
-
+        
         if(isNameValid(form.firstName) && isNameValid(form.lastName) && isNameValid(form.city) && isAddressValid(form.address) && isEmailValid(form.email)) {
             
             // //Create new object
-
+            
             const contact = getContact();
-
+            
             const products = getProductsFromLocalStorage().map(product => product.id);
-
+            
             // Getting the order by calling getOrderId function
-
+            
             getOrderId(contact, products)
-                .then(orderId => {
-
-                    // Deletes cart from local storage
-
-                    deleteProductsInLocalStorage();
-
-                    // Redirecting to the Confirmation page and getting confirmation id
-
-                    goToConfirmation(orderId);
-                })
-
+            .then(orderId => {
+                
+                // Deletes cart from local storage
+                
+                deleteProductsInLocalStorage();
+                
+                // Redirecting to the Confirmation page and getting confirmation id
+                
+                goToConfirmation(orderId);
+            })
+            
         } else {
             console.log('formulaire pas valide');
         }
-
-
+        
+        
     } else {
         console.log('cart not valid');
     }
-
+    
 });
 
 
@@ -255,23 +255,20 @@ const getContact = () => {
 // Creating AJAX function to get order data
 
 async function getOrderId(contact, products) {
-
+    
     try {
         const orderData = {contact, products};
-        let respData = await postAPI(`${urlAPI}order`, orderData);
+        let respData = await postAPI(`${urlAPI}order`, orderData); // Sending POST Request to collect order ID
         const orderId = respData.orderId;
         return orderId;
-
+        
     } catch (err) {
         alert("API Problem");
         console.log(err);
     }
-
+    
 }
 
-// Redirect to the confirmation page based on the url's id 
-
-
 const goToConfirmation = orderId => {
-    window.location = `./confirmation.html?orderId=${orderId}`;
+    window.location = `./confirmation.html?orderId=${orderId}`;  // Redirect to the confirmation page based on the url's id 
 }
